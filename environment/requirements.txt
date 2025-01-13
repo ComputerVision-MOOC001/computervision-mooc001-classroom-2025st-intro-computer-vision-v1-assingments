@@ -1,0 +1,14 @@
+# Bibliotecas esenciales para visión por computadora
+numpy>=1.21.0,<2           # Manipulación de arrays numéricos
+opencv-python==4.8.0.74    # OpenCV: procesamiento de imágenes
+matplotlib>=3.4.0          # Visualización de imágenes y gráficos
+
+# Dependencias para Jupyter Notebooks (si los usas)
+notebook>=6.4.0            # Soporte para Jupyter Notebook
+
+# Herramientas para pruebas automáticas
+pytest>=7.0.0              # Framework de pruebas
+pytest-mock>=3.10.0        # Mocking para pruebas con pytest
+
+# Dependencias adicionales utilizadas en los scripts
+requests>=2.25.0           # Descarga de datos desde URLs

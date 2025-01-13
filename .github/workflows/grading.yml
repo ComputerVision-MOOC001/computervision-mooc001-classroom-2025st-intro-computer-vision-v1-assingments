@@ -1,0 +1,36 @@
+name: Grading Workflow
+
+# Disparadores: Ejecuta cuando los estudiantes suben cambios o hacen pull requests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  grading:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Configurar Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'  # Asegúrate de usar la misma versión que en el entorno local
+
+      # 3. Instalar dependencias
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r environment/requirements.txt
+
+      # 4. Ejecutar pruebas automáticas
+      - name: Run tests
+        run: |
+          pytest tests/ --maxfail=5 --disable-warnings --tb=short

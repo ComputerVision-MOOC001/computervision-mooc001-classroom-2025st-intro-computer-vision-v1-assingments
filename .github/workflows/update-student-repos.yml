@@ -1,0 +1,34 @@
+name: Update Forks
+
+on:
+  workflow_dispatch:
+
+jobs:
+  update-forks:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Configurar Autenticación para GitHub CLI
+      - name: Set up GitHub CLI authentication
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          gh auth status  # Verifica que la autenticación funciona
+
+      # 2. Crear Pull Request en el Fork del Estudiante
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: |
+          BASE_REPO="ComputerVision-MOOC001/assignments"  # Repositorio base
+          BASE_BRANCH="main"  # Rama del repositorio base
+
+          TARGET_REPO="ComputerVision-MOOC001/intro-computer-vision-danthb"  # Fork del estudiante
+          TARGET_BRANCH="main"  # Rama del fork del estudiante
+
+          PR_TITLE="Actualizar con los últimos cambios del template"
+          PR_BODY="Se han realizado las siguientes actualizaciones:\n- Corrección de errores\n- Nuevas instrucciones para la tarea"
+
+          echo "Creando Pull Request para $TARGET_REPO desde $BASE_REPO:$BASE_BRANCH"
+          gh pr create --repo "$TARGET_REPO" --head "$BASE_REPO:$BASE_BRANCH" --base "$TARGET_BRANCH" \
+            --title "$PR_TITLE" --body "$PR_BODY" || echo "Error creando PR para $TARGET_REPO"
